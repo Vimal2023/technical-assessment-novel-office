@@ -1,0 +1,37 @@
+Monthly Bill Generator - Explanation
+
+The Monthly Bill Generator is a Python function that generates a bill for a specified month based on a list of items. It filters active items, groups them by item_code, rate, and billing period, calculates proportional amounts based on active days, and computes the total revenue.
+
+The solution involves:
+- Parsing dates using the datetime module to determine active items.
+- Filtering items whose start_date and stop_date overlap with the target month.
+- Grouping items by item_code, rate, and billing period using a dictionary.
+- Calculating amounts using the formula: (rate * qty * active_days) / total_days.
+- Summing all amounts to compute total_revenue.
+
+Helper Functions:
+- parse_date: Converts string dates (e.g., "2024-11-01") to datetime.date objects.
+- get_month_start_end: Returns the first and last day of the target month.
+- get_active_days: Calculates the number of days an item is active in the target month by comparing start_date and stop_date with month boundaries.
+- get_total_days_in_month: Returns the total days in the target month using calendar.monthrange.
+
+Main Function (generate_monthly_bill):
+- Converts rate and qty to float/int, skipping invalid items.
+- Filters active items by calculating active days.
+- Groups items by item_code, rate, and billing period using a dictionary with tuple keys.
+- Calculates proportional amounts and aggregates qty and amount for each group.
+- Returns a dictionary with line_items (list of grouped items) and total_revenue.
+
+Edge Case Handled:
+- Invalid data types: rate and qty are converted to float/int; invalid items are skipped.
+- Zero rate: Items with rate=0 are included as they contribute to qty.
+- Partial month: Active days are calculated for items starting or ending mid-month.
+- Non-active items: Items with stop_date before or start_date after the target month are skipped.
+
+
+The function returns a dictionary:
+- line_items: A list of dictionaries, each containing item_code, rate, qty, amount, and billing_period.
+- total_revenue: The sum of all amounts, rounded to 2 decimal places.
+Example output for target_month="2024-11" includes grouped items like "Executive Desk (4*2)" and total_revenue.
+
+The solution efficiently handles the requirements, producing a correctly formatted bill with grouped items and accurate calculations. The use of datetime and dictionary-based grouping ensures robustness and clarity.
